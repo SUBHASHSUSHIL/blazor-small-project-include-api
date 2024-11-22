@@ -1,0 +1,61 @@
+﻿@page "/CreateStudent"
+@using BlazorCrud.Library
+@inject HttpClient http
+@inject NavigationManager nav
+
+<h3>Create Student</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <EditForm Model="Student" OnValidSubmit="CreateStudentMethod">
+                <DataAnnotationsValidator/>
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <InputText class="form-control" @bind-Value=Student.Name></InputText>
+                    <ValidationMessage For="@(() => Student.Name)"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Father's Name</label>
+                    <InputText class="form-control" @bind-Value=Student.FatherName></InputText>
+                    <ValidationMessage For="@(() => Student.FatherName)" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Mobile</label>
+                    <InputText class="form-control" @bind-Value=Student.MobileNumber></InputText>
+                    <ValidationMessage For="@(() => Student.MobileNumber)" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Semester</label>
+                    <InputText class="form-control" @bind-Value=Student.Semester></InputText>
+                    <ValidationMessage For="@(() => Student.Semester)" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <InputText class="form-control" @bind-Value=Student.Email></InputText>
+                    <ValidationMessage For="@(() => Student.Email)" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">RollNo</label>
+                    <InputNumber class="form-control" @bind-Value=Student.RollNo></InputNumber>
+                    <ValidationMessage For="@(() => Student.RollNo)" />
+                </div>
+                <button class="btn btn-success mt-3" type="submit">Save</button>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    Student Student = new();
+
+    private void CreateStudentMethod()
+    {
+        http.PostAsJsonAsync("https://localhost:7227/api/Student", Student);
+        nav.NavigateTo("StudentDetails", true);
+    }
+}

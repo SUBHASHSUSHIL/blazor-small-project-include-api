@@ -1,0 +1,62 @@
+﻿@page "/EditStudent/{id:int}"
+@using BlazorCrud.Library
+@inject HttpClient http
+@inject NavigationManager nav
+
+<h3>Edit Student</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <EditForm Model="Student" OnValidSubmit="UpdateStudentMethod">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <InputText class="form-control" @bind-Value=Student.Name></InputText>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Father's Name</label>
+                    <InputText class="form-control" @bind-Value=Student.FatherName></InputText>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Mobile</label>
+                    <InputText class="form-control" @bind-Value=Student.MobileNumber></InputText>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Semester</label>
+                    <InputText class="form-control" @bind-Value=Student.Semester></InputText>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <InputText class="form-control" @bind-Value=Student.Email></InputText>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">RollNo</label>
+                    <InputNumber class="form-control" @bind-Value=Student.RollNo></InputNumber>
+                </div>
+                <button class="btn btn-primary mt-3" type="submit">Update</button>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    Student Student = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Student = await http.GetFromJsonAsync<Student>($"https://localhost:7227/api/Student/{Id}");
+    }
+
+    private void UpdateStudentMethod()
+    {
+        http.PutAsJsonAsync<Student>($"https://localhost:7227/api/Student/{Student.Id}", Student);
+        nav.NavigateTo("/StudentDetails",true);
+    }
+}
