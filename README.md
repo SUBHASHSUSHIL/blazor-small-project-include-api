@@ -16,12 +16,6 @@
 - **Dependency Injection & Service Layer Architecture**
 - **Bootstrap styling for a responsive UI**
 
-## 📷 Screenshots (If Applicable)
-
-![Screenshot](link-to-screenshot.png)
-
-## 🛠️ Installation
-
 ### Prerequisites:
 - .NET 8 SDK installed
 - SQL Server (or any configured database)
